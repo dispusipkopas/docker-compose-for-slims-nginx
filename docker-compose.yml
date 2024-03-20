@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  php-fpm:
+    build: 
+      context: .
+      dockerfile: Dockerphp
+    container_name: php-fpm
+    expose:
+      - 9000
+    volumes:
+      - ./public_html:/usr/share/nginx/html
+      - ./php/php-vhost.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+    depends_on:
+      - mariadb
+  
+  websrv:
+    build:
+      context: .
+      dockerfile: Dockernginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80" 
+      - "443:443"
+    volumes:
+      - ./public_html:/usr/share/nginx/html
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./logs:/var/log/nginx
+      - ./nginx/conf/vhost.conf:/etc/nginx/conf.d/vhost.conf
+      - ./nginx/conf/vhost-ssl.conf:/etc/nginx/conf.d/vhost-ssl.conf
+      - ./ssl/yourssl.crt:/etc/nginx/ssl/yourssl.crt
+      - ./ssl/yoursslkey.key:/etc/nginx/ssl/yoursslkey.key
+    depends_on:
+      - php-fpm
+
+  mariadb:
+    build:
+      context: .
+      dockerfile: Dockermariadb
+    container_name: mariadb
+    environment:
+      MYSQL_DATABASE: slims_db
+      MYSQL_USER: slimsuser
+      MYSQL_PASSWORD: gunakan-random-string-generator
+      MYSQL_ROOT_PASSWORD: gunakan-random-string-generator
+      # site : https://www.random.org/strings/
+    ports:
+      - 3306:3306
+    volumes:
+       - ./db_data:/var/lib/mysql
