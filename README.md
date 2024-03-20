@@ -11,7 +11,7 @@ docker ini merupakan custom konfigurasi build dengan nginx, php-fpm 8.1 dan mari
   - php-vhost.conf di gunakan untuk custom pm.max_children = 50 (pada php-fpm)
 
 ## Installation
-Sebelum menggunakan docker composer for slims nginx, lakukan git clone terlebih dahulu dari official repo dari [slims9_bulian](https://github.com/slims/slims9_bulian/) dan outputkan directory public_html
+Sebelum menggunakan docker composer for slims nginx, lakukan git clone terlebih dahulu dari official repo [slims9_bulian](https://github.com/slims/slims9_bulian/) dan outputkan directory public_html
 ```sh
 git clone https://github.com/slims/slims9_bulian.git public_html
 chmod -R 777 public_html/{config,repository,images,files} ' = 16M
