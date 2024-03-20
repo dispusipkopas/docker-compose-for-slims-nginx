@@ -30,3 +30,9 @@ Jalankan docker berikut ini
 docker-compose up -d --build
 docker container logs (nama images : php-fpm, nginx, mariadb) # untuk melihat error log pada saat running docker
 ```
+
+## Coding Error Analysis Slims 9
+untuk menganalisa coding error atau pengecekan error.log gunakan berikut ini
+```sh
+tail -f log/error.log -n 1000
+```
